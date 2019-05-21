@@ -1,33 +1,54 @@
-.App {
-  text-align: center;
+@import "~normalize.css";
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+@import "~@blueprintjs/table/lib/css/table.css";
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
+html {
+  box-sizing: border-box;
+  font-size: 10px;
+  font-family: "Roboto", sans-serif;
+  -webkit-user-select: none; /* Electron dragging bug workaround until fix */
+  -webkit-app-region: drag; /* Electron dragging bug workaround until fix */
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+*,
+*::before,
+*::after {
+  font-family: "Lato", sans-serif !important;
+  box-sizing: inherit;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  -webkit-app-region: no-drag; /* Electron dragging bug workaround until fix */
+}
+body {
+  margin-top: 20px; /* Electron dragging bug workaround until fix */
+}
+.centered-block {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  height: 100vh;
+}
+ol,
+ul {
+  list-style: none;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+img {
+  max-width: 100%;
+  height: auto;
 }
