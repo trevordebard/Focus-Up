@@ -70,8 +70,8 @@
     "url": "https://github.com/trevordebard"
   },
   "build": {
-    "appId": "com.trevordebard.better-focus",
-    "productName": "Better Focus",
+    "appId": "com.trevordebard.focusup",
+    "productName": "Focus Up",
     "copyright": "Copyright © 2019 Trevor DeBardeleben",
     "mac": {
       "category": "public.app-category.productivity"

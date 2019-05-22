@@ -78,7 +78,7 @@ export default class Home extends Component {
             console.log('list created');
             this.waitForBlock(wwwList);
         });
-        ipcRenderer.on('permissionDenied', () => {
+        ipcRenderer.on('permissionDenied', (event, data) => {
             console.log('p denied');
             this.setState({ displayProgress: false });
             clearInterval(this.interval);
