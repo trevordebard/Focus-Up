@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CountdownInput from './CountdownInput';
 import Countdown from './Countdown';
+import Notification from './Notification';
 import colors from '../constants/colors';
 import db from '../constants/db';
 
@@ -67,6 +68,8 @@ export default class Home extends Component {
             displayProgress: false,
             time: 25,
             timerStarted: false,
+            notificationText: 'Hello there',
+            notificationVisible: false,
         };
     }
 
@@ -80,7 +83,12 @@ export default class Home extends Component {
         });
         ipcRenderer.on('permissionDenied', (event, data) => {
             console.log('p denied');
-            this.setState({ displayProgress: false });
+            this.setState({
+                displayProgress: false,
+                notificationText:
+                    'Permission denied. You must grant permission in order to start blocking.',
+                notificationVisible: true,
+            });
             clearInterval(this.interval);
         });
     }
@@ -133,7 +141,15 @@ export default class Home extends Component {
     };
 
     setTime = value => {
-        this.setState({ time: value });
+        // eslint-disable-next-line no-restricted-globals
+        if (isNaN(value)) {
+            this.setState({
+                notificationText: 'You may only enter numbers',
+                notificationVisible: true,
+            });
+        } else {
+            this.setState({ time: value, notificationVisible: false });
+        }
     };
 
     toggleTimerStarted = () => {
@@ -142,7 +158,13 @@ export default class Home extends Component {
     };
 
     render() {
-        const { displayProgress, time, timerStarted } = this.state;
+        const {
+            displayProgress,
+            time,
+            timerStarted,
+            notificationText,
+            notificationVisible,
+        } = this.state;
         return (
             <HomeContainer>
                 {timerStarted ? (
@@ -167,16 +189,24 @@ export default class Home extends Component {
                         <Link to="/blacklist">edit blacklist</Link>
                     </div>
                 )}
+                <Notification
+                    message={notificationText}
+                    visible={notificationVisible}
+                    handleHide={() =>
+                        this.setState({
+                            notificationVisible: false,
+                        })
+                    }
+                    duration={8000}
+                />
             </HomeContainer>
         );
     }
 }
 
 const BeginFocus = props => {
-    console.log(props);
     let { displayProgress } = props;
     const { triggerBlock } = props;
-    console.log(displayProgress);
     return (
         <ButtonContainer>
             <DefaultButton

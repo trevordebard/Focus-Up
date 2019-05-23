@@ -44,10 +44,7 @@ export default function CountdownInput({ time, setTime }) {
                 type="text"
                 value={time}
                 onChange={e => {
-                    // eslint-disable-next-line no-restricted-globals
-                    if (!isNaN(e.target.value)) {
-                        setTime(e.target.value);
-                    }
+                    setTime(e.target.value);
                 }}
                 onFocus={e => {
                     e.target.value = '';
@@ -68,7 +65,7 @@ export default function CountdownInput({ time, setTime }) {
 
 CountdownInput.propTypes = {
     setTime: PropTypes.func.isRequired,
-    time: PropTypes.number,
+    time: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 CountdownInput.defaultProps = {
     time: 25,
