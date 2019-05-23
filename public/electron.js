@@ -3,6 +3,7 @@ const electron = require('electron');
 const { app } = electron;
 const { BrowserWindow } = electron;
 const { ipcMain } = electron;
+const { dialog } = electron;
 
 const path = require('path');
 const isDev = require('electron-is-dev');
@@ -11,6 +12,29 @@ const BlockSites = require('./scripts/block_sites');
 const UnblockSites = require('./scripts/unblock_sites');
 
 let mainWindow;
+let blockInProgress = false;
+
+function confirmClose() {
+    dialog.showMessageBox(
+        {
+            type: 'question',
+            buttons: ['Yes', 'No'],
+            title: 'Confirm',
+            message:
+                'Are you sure you want to close in the middle of a Focus session?',
+        },
+        function(response) {
+            console.log(`response: ${response}`);
+            if (response === 0) {
+                // Runs the following if 'Yes' is clicked
+                app.showExitPrompt = false;
+                UnblockSites.unblock();
+                blockInProgress = false;
+                app.quit();
+            }
+        }
+    );
+}
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -22,6 +46,14 @@ function createWindow() {
             nodeIntegration: true,
         },
         icon: path.join(__dirname, 'favicon.ico'),
+    });
+    mainWindow.on('close', function(e) {
+        if (blockInProgress) {
+            e.preventDefault();
+            confirmClose();
+        } else {
+            app.quit();
+        }
     });
     mainWindow.loadURL(
         isDev
@@ -40,11 +72,13 @@ function createWindow() {
 let frontEndSender = null;
 ipcMain.on('block', (event, sites) => {
     frontEndSender = event.sender;
+    blockInProgress = true;
     event.sender.send('load');
     BlockSites.block(sites, ipcMain);
 });
 
 ipcMain.on('unblock', () => {
+    blockInProgress = false;
     UnblockSites.unblock();
 });
 
@@ -61,8 +95,21 @@ ipcMain.on('permissionDenied', () => {
 
 app.on('ready', createWindow);
 
-app.on('window-all-closed', () => {
-    app.quit();
+app.on('window-all-closed', e => {
+    if (blockInProgress) {
+        e.preventDefault(); // Prevents the window from closing
+    } else {
+        app.quit();
+    }
+});
+
+// Works with Command + Q
+app.on('before-quit', function(e) {
+    // Handle menu-item or keyboard shortcut quit here
+    if (blockInProgress) {
+        e.preventDefault();
+        confirmClose();
+    }
 });
 
 app.on('activate', () => {
@@ -70,4 +117,5 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
 exports.app = app;
