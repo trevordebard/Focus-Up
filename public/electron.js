@@ -6,6 +6,7 @@ const { ipcMain } = electron;
 
 const path = require('path');
 const isDev = require('electron-is-dev');
+const MenuBuilder = require('./menu');
 const BlockSites = require('./scripts/block_sites');
 const UnblockSites = require('./scripts/unblock_sites');
 
@@ -19,7 +20,6 @@ function createWindow() {
         titleBarStyle: 'hidden',
         webPreferences: {
             nodeIntegration: true,
-            devTools: isDev,
         },
         icon: path.join(__dirname, 'favicon.ico'),
     });
@@ -33,6 +33,8 @@ function createWindow() {
         // BrowserWindow.addDevToolsExtension('<location to your react chrome extension>');
         // mainWindow.webContents.openDevTools();
     }
+    const menuBuilder = new MenuBuilder(mainWindow);
+    menuBuilder.buildMenu();
     mainWindow.on('closed', () => (mainWindow = null));
 }
 let frontEndSender = null;
