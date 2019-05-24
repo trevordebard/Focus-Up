@@ -8,7 +8,6 @@ const isDev = require('electron-is-dev');
 class MenuBuilder {
     constructor(mainWindow) {
         this.mainWindow = mainWindow;
-        console.log('constructed');
     }
 
     buildMenu() {
@@ -28,7 +27,6 @@ class MenuBuilder {
     }
 
     setupDevelopmentEnvironment() {
-        console.log('dev');
         this.mainWindow.openDevTools();
         this.mainWindow.webContents.on('context-menu', (e, props) => {
             const { x, y } = props;
@@ -45,7 +43,6 @@ class MenuBuilder {
     }
 
     buildDarwinTemplate() {
-        console.log('darwin');
         const subMenuAbout = {
             label: 'Focus Up',
             submenu: [
@@ -57,7 +54,7 @@ class MenuBuilder {
                 { label: 'Services', submenu: [] },
                 { type: 'separator' },
                 {
-                    label: 'Hide ElectronReact',
+                    label: 'Hide Focus Up',
                     accelerator: 'Command+H',
                     selector: 'hide:',
                 },

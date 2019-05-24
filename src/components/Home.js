@@ -214,6 +214,7 @@ const BeginFocus = props => {
                     displayProgress = !displayProgress;
                     triggerBlock();
                 }}
+                disabled={displayProgress}
             >
                 {displayProgress ? <Spinner size={20} /> : 'Begin Focus'}
             </DefaultButton>
@@ -226,7 +227,10 @@ const EndFocus = props => {
     const [alertOpen, setAlertOpen] = useState(false);
     return (
         <div>
-            <DefaultButton onClick={() => setAlertOpen(true)}>
+            <DefaultButton
+                onClick={() => setAlertOpen(true)}
+                disabled={alertOpen}
+            >
                 End Session Early
             </DefaultButton>
             <Alert
