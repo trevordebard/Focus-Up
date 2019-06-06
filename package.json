@@ -1,6 +1,6 @@
 {
   "name": "focus-up",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -17,7 +17,8 @@
     "react-scripts": "3.0.1",
     "react-spring": "^8.0.20",
     "styled-components": "^4.2.0",
-    "sudo-prompt": "^8.2.5"
+    "sudo-prompt": "^8.2.5",
+    "typescript": "^3.5.1"
   },
   "main": "public/electron.js",
   "scripts": {
@@ -28,7 +29,7 @@
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "electron-pack": "build -m"
+    "electron-pack": "CSC_LINK=/Users/trevor/Documents/FocusUpSign.p12 CSC_KEY_PASSWORD=  build -m"
   },
   "eslintConfig": {
     "extends": "wesbos"
@@ -68,18 +69,34 @@
   "author": {
     "name": "Trevor DeBardeleben",
     "email": "trevordebard@gmail.com",
-    "url": "https://github.com/trevordebard"
+    "url": "https://focusup.app"
   },
   "build": {
     "appId": "com.trevordebard.focusup",
     "productName": "Focus Up",
-    "copyright": "Copyright © 2019 Trevor DeBardeleben",
     "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        "pkg",
+        "dmg",
+        "zip",
+        "mas"
+      ],
+      "entitlements": "build/entitlements.mac.plist",
+      "type": "distribution",
+      "icon": "build/icon.icns"
+    },
+    "mas": {
+      "entitlements": "build/entitlements.mas.plist",
+      "type": "distribution",
       "category": "public.app-category.productivity"
     },
     "files": [
       "build/**/*",
-      "node_modules/**/*"
+      "node_modules/**/*",
+      "app/**/*",
+      "package.json",
+      "embedded.provisionprofile"
     ],
     "directories": {
       "buildResources": "assets"
