@@ -1,5 +1,6 @@
 {
   "name": "focus-up",
+  "description": "Block websites across your computer for a specified time period.",
   "version": "0.1.1",
   "private": true,
   "homepage": "./",
@@ -29,7 +30,7 @@
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "electron-pack": "CSC_LINK=/Users/trevor/Documents/FocusUpSign.p12 CSC_KEY_PASSWORD=  build -m"
+    "electron-pack": "CSC_LINK=/Users/trevordebardeleben/Documents/FocusUpSign.p12 CSC_KEY_PASSWORD=  build -m"
   },
   "browserslist": {
     "production": [
@@ -49,7 +50,8 @@
     "babel-eslint": "^10.0.1",
     "concurrently": "^4.1.0",
     "electron": "^5.0.1",
-    "electron-builder": "^20.40.2",
+    "electron-builder": "20.43.0",
+    "electron-notarize": "^0.1.1",
     "prettier": "^1.16.4",
     "typescript": "^3.5.1",
     "wait-on": "^3.2.0"
@@ -62,7 +64,12 @@
   "build": {
     "appId": "com.trevordebard.focusup",
     "productName": "Focus Up",
+    "afterSign": "build/scripts/notarize.js",
     "mac": {
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
       "category": "public.app-category.productivity",
       "target": [
         "pkg",
@@ -70,12 +77,10 @@
         "zip",
         "mas"
       ],
-      "entitlements": "build/entitlements.mac.plist",
       "type": "distribution",
       "icon": "build/icon.icns"
     },
     "mas": {
-      "entitlements": "build/entitlements.mas.plist",
       "type": "distribution",
       "category": "public.app-category.productivity"
     },

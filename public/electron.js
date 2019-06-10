@@ -90,7 +90,11 @@ ipcMain.on("updateProgress", data => {
   frontEndSender.send("updateProgress", data);
 });
 ipcMain.on("permissionDenied", () => {
+  blockInProgress = false;
   frontEndSender.send("permissionDenied");
+});
+ipcMain.on("sitesEmpty", () => {
+  frontEndSender.send("sitesEmpty");
 });
 
 app.on("ready", createWindow);

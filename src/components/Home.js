@@ -82,14 +82,22 @@ export default class Home extends Component {
       this.waitForBlock(wwwList);
     });
     ipcRenderer.on("permissionDenied", (event, data) => {
-      console.log("p denied");
       this.setState({
         displayProgress: false,
         notificationText:
-          "Permission denied. You must grant permission in order to start blocking.",
+          "You must grant permission from administrator account in order to start blocking.",
         notificationVisible: true
       });
       clearInterval(this.interval);
+    });
+    ipcRenderer.on("sitesEmpty", () => {
+      this.startCountdown();
+      this.setState({
+        notificationText:
+          "You've started a focus session  with an empty blacklist. If you would like to block websites, you must edit your blacklist.",
+        notificationVisible: true,
+        displayProgress: false
+      });
     });
   }
 
