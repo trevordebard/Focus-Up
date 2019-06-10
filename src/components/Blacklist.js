@@ -75,16 +75,24 @@ const DefaultButton = styled.button`
   padding: 0.6em 1em;
   border-radius: 3px;
   border: 2px solid ${colors.primary};
-  background: linear-gradient(to right, ${colors.primary} 0%,  ${colors.primary} 50%, #ffffff 50%, #ffffff 100%);
+  background: linear-gradient(
+    to right,
+    ${colors.primary} 0%,
+    ${colors.primary} 50%,
+    #ffffff 50%,
+    #ffffff 100%
+  );
   background-position: 100% 0;
   background-size: 200% 100%;
   transition: background-position 0.1s;
   :hover {
     box-shadow: inset 0 0 0 2em adjust-hue(blue, 45deg);
     color: #ffffff;
-    background-position:0 0;
+    background-position: 0 0;
     cursor: pointer;
   }
+  :focus {
+    outline: none;
   }
 `;
 
