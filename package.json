@@ -30,7 +30,8 @@
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "electron-pack": "CSC_LINK=/Users/trevordebardeleben/Documents/FocusUpSign.p12 CSC_KEY_PASSWORD=  build -m"
+    "electron-pack": "build -m",
+    "win": "build -w"
   },
   "browserslist": {
     "production": [
