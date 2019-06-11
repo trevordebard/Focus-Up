@@ -68,34 +68,44 @@ const SiteInput = styled.input`
   margin-right: 5px;
 `;
 const DefaultButton = styled.button`
+  margin: 5px;
+  display: inline-block;
+  border: 1px solid;
+  padding: 0.6em 0.5em;
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s ease 0s;
+  background: #fff;
   color: ${colors.primary};
-  box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.1);
-  font-size: 1em;
+  box-sizing: border-box;
+  font-size: 16px;
   width: 80px;
-  padding: 0.6em 1em;
   border-radius: 3px;
-  border: 2px solid ${colors.primary};
-  background: linear-gradient(
-    to right,
-    ${colors.primary} 0%,
-    ${colors.primary} 50%,
-    #ffffff 50%,
-    #ffffff 100%
-  );
-  background-position: 100% 0;
-  background-size: 200% 100%;
-  transition: background-position 0.1s;
-  :hover {
-    box-shadow: inset 0 0 0 2em adjust-hue(blue, 45deg);
-    color: #ffffff;
-    background-position: 0 0;
-    cursor: pointer;
+
+  &:after {
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: all 0.2s ease 0s;
+    width: 0%;
+    z-index: -1;
+    box-sizing: border-box;
   }
-  :focus {
+  &:hover {
+    border-color: ${colors.primary};
+    color: white;
+    cursor: pointer;
+    &:after {
+      width: 100%;
+      background-color: ${colors.primary};
+    }
+  }
+  &:focus {
     outline: none;
   }
 `;
-
 const DefaultHeader = styled.h1`
   color: ${colors.header};
   font-weight: 10;

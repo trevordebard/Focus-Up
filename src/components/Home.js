@@ -26,36 +26,48 @@ const ButtonContainer = styled.div`
 `;
 
 const DefaultButton = styled.button`
+  margin: 5px;
+  display: inline-block;
+  border: 1px solid;
+  padding: 0.6em 0.5em;
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s ease 0s;
+  background: #fff;
   color: ${colors.secondary};
-  font-size: 1em;
-  margin: 1em 0.5em;
-  padding: 0.6em 1em;
-  border: 2px solid ${colors.secondary};
+  outline: medium none;
+  box-sizing: border-box;
+  font-size: 16px;
+  width: 120px;
   border-radius: 3px;
-  min-width: 86px;
-  height: 40px;
-  background: linear-gradient(
-    to right,
-    ${colors.secondary} 0%,
-    ${colors.secondary} 50%,
-    #ffffff 50%,
-    #ffffff 100%
-  );
-  background-position: 100% 0;
-  background-size: 200% 100%;
-  transition: background-position 0.1s;
 
-  :hover {
-    box-shadow: inset 0 0 0 2em adjust-hue(blue, 45deg);
-    color: #ffffff;
-    background-position: 0 0;
+  &:after {
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: all 0.2s ease 0s;
+    width: 0%;
+    z-index: -1;
+    box-sizing: border-box;
+  }
+  &:hover {
+    border-color: ${colors.secondary};
+    color: white;
     cursor: pointer;
-    .bp3-spinner-head {
-      stroke: white;
+    &:after {
+      width: 100%;
+      background-color: ${colors.secondary};
     }
   }
-  .bp3-spinner-head {
-    stroke: ${colors.primary};
+`;
+const Tagline = styled.p`
+  font-size: 1.6rem;
+  color: ${colors.secondary};
+  margin-bottom: 10px;
+  @media (max-width: 480px) {
+    margin: 50px 20px;
   }
 `;
 
