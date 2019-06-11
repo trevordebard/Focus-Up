@@ -47,14 +47,14 @@ function createWindow() {
     },
     icon: path.join(__dirname, "favicon.ico")
   });
-  mainWindow.on("close", function(e) {
-    if (blockInProgress) {
-      e.preventDefault();
-      confirmClose();
-    } else {
-      app.quit();
-    }
-  });
+  // mainWindow.on("close", function(e) {
+  //   if (blockInProgress) {
+  //     e.preventDefault();
+  //     confirmClose();
+  //   } else {
+  //     app.quit();
+  //   }
+  // });
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"
@@ -68,6 +68,8 @@ function createWindow() {
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
   mainWindow.on("closed", () => (mainWindow = null));
+  mainWindow.setMenuBarVisibility(false);
+
 }
 let frontEndSender = null;
 ipcMain.on("block", (event, sites) => {

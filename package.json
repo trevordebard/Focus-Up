@@ -28,10 +28,11 @@
     "test": "rescripts test",
     "eject": "react-scripts eject",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "win-dev": "concurrently \"SET BROWSER=none&&npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "electron-pack": "build -m",
-    "win": "build -w"
+    "electron-pack": "build -w",
+    "pack-win": "build -w"
   },
   "browserslist": {
     "production": [
@@ -65,7 +66,7 @@
   "build": {
     "appId": "com.trevordebard.focusup",
     "productName": "Focus Up",
-    "afterSign": "build/scripts/notarize.js",
+    "extends": null,
     "mac": {
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
@@ -85,12 +86,16 @@
       "type": "distribution",
       "category": "public.app-category.productivity"
     },
+    "win": {
+      "target": "NSIS"
+    },
     "files": [
       "build/**/*",
       "node_modules/**/*",
       "app/**/*",
       "package.json",
-      "embedded.provisionprofile"
+      "embedded.provisionprofile",
+      "public/**/*"
     ],
     "directories": {
       "buildResources": "assets"
