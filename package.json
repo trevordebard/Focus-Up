@@ -1,5 +1,5 @@
 {
-  "name": "focus-up",
+  "name": "focusup",
   "description": "Block websites across your computer for a specified time period.",
   "version": "0.1.1",
   "private": true,
@@ -87,7 +87,10 @@
       "category": "public.app-category.productivity"
     },
     "win": {
-      "target": "NSIS"
+      "target": [
+        "NSIS",
+        "appx"
+      ]
     },
     "files": [
       "build/**/*",
