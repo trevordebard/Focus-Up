@@ -3,7 +3,7 @@
 An application that helps you stay focused on your work by blocking websites on your computer for a duration of time.
 
 <p align="center">
-<img alt="promotional image" src="assets/layered_promo.png" width="400"/>
+<img alt="promotional image" src="assets/layered_promo.png" width="600"/>
 <p>
 
 ## Built With
