@@ -3,11 +3,10 @@ import styled from 'styled-components';
 import http from 'http';
 import { Link } from 'react-router-dom';
 import CountdownInput from './CountdownInput';
-import Timer from './Timer';
+import Countdown from './Countdown';
 import Notification from './Notification';
-import db from '../constants/db';
+import db from '../../constants/db';
 import BeginFocusButton from './BeginFocusButton';
-import EndFocusButton from './EndFocusButton';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -41,7 +40,7 @@ export default class Home extends Component {
       console.log('list created');
       this.waitForBlock(wwwList);
     });
-    ipcRenderer.on('permissionDenied', (event, data) => {
+    ipcRenderer.on('permissionDenied', () => {
       this.setState({
         displayProgress: false,
         notificationText:
@@ -138,17 +137,13 @@ export default class Home extends Component {
     return (
       <HomeContainer>
         {timerStarted ? (
-          <div>
-            <Timer
-              started={timerStarted}
-              minutes={time}
-              stopCountdown={this.stopCountdown}
-            />
-            <EndFocusButton
-              triggerUnblock={this.triggerUnblock}
-              toggleTimerStarted={this.toggleTimerStarted}
-            />
-          </div>
+          <Countdown
+            started={timerStarted}
+            minutes={time}
+            stopCountdown={this.stopCountdown}
+            triggerUnblock={this.triggerUnblock}
+            toggleTimerStarted={this.toggleTimerStarted}
+          />
         ) : (
           <div>
             <CountdownInput time={time} setTime={this.setTime} />

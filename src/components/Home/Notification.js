@@ -4,7 +4,7 @@ import { useSpring, animated } from 'react-spring';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import colors from '../constants/colors';
+import colors from '../../constants/colors';
 
 library.add(faTimes);
 
@@ -37,11 +37,11 @@ export default function Notification({
   message,
   visible,
   handleHide,
-  duration = 8000
+  duration = 8000,
 }) {
   const props = useSpring({
     transform: visible ? 'translateX(0px)' : 'translateX(100px)',
-    opacity: visible ? 1 : 0
+    opacity: visible ? 1 : 0,
   });
   useEffect(() => {
     let timeout;

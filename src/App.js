@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Blacklist from './components/Blacklist/Blacklist';
-import Home from './components/Home';
+import Home from './components/Home/Home';
 import routes from './constants/routes';
 import './App.css';
 

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Spinner } from '@blueprintjs/core';
-import StyledButton from './global-styles/StyledButton';
-import colors from '../constants/colors';
+import StyledButton from '../global-styles/StyledButton';
+import colors from '../../constants/colors';
 
 const ButtonContainer = styled.div`
   display: flex;

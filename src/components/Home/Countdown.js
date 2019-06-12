@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import colors from '../constants/colors';
+import colors from '../../constants/colors';
+import EndFocusButton from './EndFocusButton';
 
 const Minutes = styled.p`
   color: ${colors.primary};
@@ -35,7 +36,6 @@ export default class Timer extends Component {
   }
 
   componentDidMount() {
-    console.log('Component mounted');
     this.interval = setInterval(this.begin, 1000);
   }
 
@@ -57,12 +57,17 @@ export default class Timer extends Component {
 
   render() {
     const { min, sec } = this.state;
+    const { triggerUnblock, toggleTimerStarted } = this.props;
     return (
       <TimerContainer>
         <Countdown>
           {min}:{`0${sec}`.slice(-2)}
         </Countdown>
         <Minutes>Minutes</Minutes>
+        <EndFocusButton
+          triggerUnblock={triggerUnblock}
+          toggleTimerStarted={toggleTimerStarted}
+        />
       </TimerContainer>
     );
   }
@@ -72,6 +77,8 @@ Timer.propTypes = {
   started: PropTypes.bool.isRequired,
   minutes: PropTypes.number,
   stopCountdown: PropTypes.func.isRequired,
+  toggleTimerStarted: PropTypes.func.isRequired,
+  triggerUnblock: PropTypes.func.isRequired,
 };
 Timer.defaultProps = {
   minutes: 25,

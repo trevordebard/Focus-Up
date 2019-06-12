@@ -10,7 +10,8 @@ const StyledList = styled.ul`
 `;
 function useForceUpdate() {
   const [value, set] = useState(true);
-  return () => set(!value); // toggle the state to force render
+  // toggle the state to force render
+  return () => set(!value);
 }
 
 function SiteList(props) {
@@ -33,7 +34,11 @@ function SiteList(props) {
   return (
     <StyledList>
       {sites.map(site => (
-        <SiteListItem handleDelete={handleDelete} site={site} />
+        <SiteListItem
+          key={`${site}_${Date.now()}`}
+          handleDelete={handleDelete}
+          site={site}
+        />
       ))}
     </StyledList>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Alert } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
-import StyledButton from './global-styles/StyledButton';
-import colors from '../constants/colors';
+import StyledButton from '../global-styles/StyledButton';
+import colors from '../../constants/colors';
 
 const EndFocus = props => {
   const { toggleTimerStarted, triggerUnblock } = props;
