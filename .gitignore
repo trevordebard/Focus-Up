@@ -26,4 +26,4 @@ yarn-error.log*
 /dist
 .git.bfg-report
 info.plist
-public/scripts
+notarize.js

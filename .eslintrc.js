@@ -13,6 +13,7 @@ module.exports = {
     'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx'] }],
     'no-use-before-define': ['off'],
     'no-console': ['off'],
+    'no-unused-vars': ['error', { args: 'none' }],
     'max-len': [
       'warn',
       {
