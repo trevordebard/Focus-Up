@@ -1,16 +1,15 @@
-import React, { Component, useState } from "react";
-import styled from "styled-components";
-import { Spinner, Alert } from "@blueprintjs/core";
-import http from "http";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import CountdownInput from "./CountdownInput";
-import Countdown from "./Countdown";
-import Notification from "./Notification";
-import colors from "../constants/colors";
-import db from "../constants/db";
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import http from 'http';
+import { Link } from 'react-router-dom';
+import CountdownInput from './CountdownInput';
+import Timer from './Timer';
+import Notification from './Notification';
+import db from '../constants/db';
+import BeginFocusButton from './BeginFocusButton';
+import EndFocusButton from './EndFocusButton';
 
-const { ipcRenderer } = window.require("electron");
+const { ipcRenderer } = window.require('electron');
 
 const HomeContainer = styled.div`
   display: block;
@@ -18,45 +17,6 @@ const HomeContainer = styled.div`
   margin: auto;
   padding: 70px;
   text-align: center;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const DefaultButton = styled.button`
-  color: ${colors.secondary};
-  font-size: 1em;
-  margin: 1em 0.5em;
-  padding: 0.6em 1em;
-  border: 2px solid ${colors.secondary};
-  border-radius: 3px;
-  min-width: 86px;
-  height: 40px;
-  background: linear-gradient(
-    to right,
-    ${colors.secondary} 0%,
-    ${colors.secondary} 50%,
-    #ffffff 50%,
-    #ffffff 100%
-  );
-  background-position: 100% 0;
-  background-size: 200% 100%;
-  transition: background-position 0.1s;
-
-  :hover {
-    box-shadow: inset 0 0 0 2em adjust-hue(blue, 45deg);
-    color: #ffffff;
-    background-position: 0 0;
-    cursor: pointer;
-    .bp3-spinner-head {
-      stroke: white;
-    }
-  }
-  .bp3-spinner-head {
-    stroke: ${colors.primary};
-  }
 `;
 
 export default class Home extends Component {
@@ -68,42 +28,42 @@ export default class Home extends Component {
       displayProgress: false,
       time: 25,
       timerStarted: false,
-      notificationText: "Hello there",
-      notificationVisible: false
+      notificationText: 'Hello there',
+      notificationVisible: false,
     };
   }
 
   componentDidMount() {
-    ipcRenderer.on("load", () => {
+    ipcRenderer.on('load', () => {
       this.setState({ displayProgress: true });
     });
-    ipcRenderer.on("blockComplete", (event, wwwList) => {
-      console.log("list created");
+    ipcRenderer.on('blockComplete', (event, wwwList) => {
+      console.log('list created');
       this.waitForBlock(wwwList);
     });
-    ipcRenderer.on("permissionDenied", (event, data) => {
+    ipcRenderer.on('permissionDenied', (event, data) => {
       this.setState({
         displayProgress: false,
         notificationText:
-          "You must grant permission from administrator account in order to start blocking.",
-        notificationVisible: true
+          'You must grant permission from administrator account in order to start blocking.',
+        notificationVisible: true,
       });
       clearInterval(this.interval);
     });
-    ipcRenderer.on("sitesEmpty", () => {
+    ipcRenderer.on('sitesEmpty', () => {
       this.startCountdown();
       this.setState({
         notificationText:
           "You've started a focus session  with an empty blacklist. If you would like to block websites, you must edit your blacklist.",
         notificationVisible: true,
-        displayProgress: false
+        displayProgress: false,
       });
     });
   }
 
   triggerBlock = () => {
-    const sites = db.get("blockedSites").value();
-    ipcRenderer.send("block", sites);
+    const sites = db.get('blockedSites').value();
+    ipcRenderer.send('block', sites);
   };
 
   waitForBlock = () => {
@@ -111,22 +71,22 @@ export default class Home extends Component {
 
     this.interval = setInterval(() => {
       if (navigator.onLine) {
-        db.get("blockedSites")
+        db.get('blockedSites')
           .value()
           .forEach(website => {
             http
               .get(`http://${website}`, () => {
                 console.log(`${website} is not blocked`);
               })
-              .on("error", () => {
+              .on('error', () => {
                 blockedCount += 1;
               });
           });
       }
-      if (blockedCount === db.get("blockedSites").value().length) {
+      if (blockedCount === db.get('blockedSites').value().length) {
         this.setState({
           displayProgress: false,
-          timerStarted: true
+          timerStarted: true,
         });
         clearInterval(this.interval);
       }
@@ -134,19 +94,19 @@ export default class Home extends Component {
   };
 
   triggerUnblock = () => {
-    ipcRenderer.send("unblock");
+    ipcRenderer.send('unblock');
   };
 
   startCountdown = () => {
     this.setState({
-      timerStarted: true
+      timerStarted: true,
     });
   };
 
   stopCountdown = () => {
     this.triggerUnblock();
     this.setState({
-      timerStarted: false
+      timerStarted: false,
     });
   };
 
@@ -154,8 +114,8 @@ export default class Home extends Component {
     // eslint-disable-next-line no-restricted-globals
     if (isNaN(value)) {
       this.setState({
-        notificationText: "You may only enter numbers",
-        notificationVisible: true
+        notificationText: 'You may only enter numbers',
+        notificationVisible: true,
       });
     } else {
       this.setState({ time: value, notificationVisible: false });
@@ -173,18 +133,18 @@ export default class Home extends Component {
       time,
       timerStarted,
       notificationText,
-      notificationVisible
+      notificationVisible,
     } = this.state;
     return (
       <HomeContainer>
         {timerStarted ? (
           <div>
-            <Countdown
+            <Timer
               started={timerStarted}
               minutes={time}
               stopCountdown={this.stopCountdown}
             />
-            <EndFocus
+            <EndFocusButton
               triggerUnblock={this.triggerUnblock}
               toggleTimerStarted={this.toggleTimerStarted}
             />
@@ -192,7 +152,7 @@ export default class Home extends Component {
         ) : (
           <div>
             <CountdownInput time={time} setTime={this.setTime} />
-            <BeginFocus
+            <BeginFocusButton
               displayProgress={displayProgress}
               triggerBlock={this.triggerBlock}
             />
@@ -204,7 +164,7 @@ export default class Home extends Component {
           visible={notificationVisible}
           handleHide={() =>
             this.setState({
-              notificationVisible: false
+              notificationVisible: false,
             })
           }
           duration={8000}
@@ -213,57 +173,3 @@ export default class Home extends Component {
     );
   }
 }
-
-const BeginFocus = props => {
-  let { displayProgress } = props;
-  const { triggerBlock } = props;
-  return (
-    <ButtonContainer>
-      <DefaultButton
-        onClick={() => {
-          displayProgress = !displayProgress;
-          triggerBlock();
-        }}
-        disabled={displayProgress}
-      >
-        {displayProgress ? <Spinner size={20} /> : "Begin Focus"}
-      </DefaultButton>
-    </ButtonContainer>
-  );
-};
-
-const EndFocus = props => {
-  const { toggleTimerStarted, triggerUnblock } = props;
-  const [alertOpen, setAlertOpen] = useState(false);
-  return (
-    <div>
-      <DefaultButton onClick={() => setAlertOpen(true)} disabled={alertOpen}>
-        End Session Early
-      </DefaultButton>
-      <Alert
-        isOpen={alertOpen}
-        confirmButtonText="End Early"
-        cancelButtonText="Cancel"
-        intent="danger"
-        onCancel={() => setAlertOpen(false)}
-        onConfirm={() => {
-          triggerUnblock();
-          toggleTimerStarted();
-        }}
-        canOutsideClickCancel
-        transitionDuration={100}
-      >
-        <p>Are you sure you want to end this session early?</p>
-      </Alert>
-    </div>
-  );
-};
-
-BeginFocus.propTypes = {
-  displayProgress: PropTypes.bool.isRequired,
-  triggerBlock: PropTypes.func.isRequired
-};
-EndFocus.propTypes = {
-  toggleTimerStarted: PropTypes.func.isRequired,
-  triggerUnblock: PropTypes.func.isRequired
-};
