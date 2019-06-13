@@ -7,6 +7,7 @@ import Countdown from './Countdown';
 import Notification from './Notification';
 import db from '../../constants/db';
 import BeginFocusButton from './BeginFocusButton';
+import defaults from '../../constants/defaults';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -25,9 +26,9 @@ export default class Home extends Component {
     super();
     this.state = {
       displayProgress: false,
-      time: 25,
+      time: defaults.COUNTDOWN,
       timerStarted: false,
-      notificationText: 'Hello there',
+      notificationText: defaults.NOTIF_TEXT,
       notificationVisible: false,
     };
   }
@@ -162,7 +163,7 @@ export default class Home extends Component {
               notificationVisible: false,
             })
           }
-          duration={8000}
+          duration={defaults.NOTIF_DURATION}
         />
       </HomeContainer>
     );

@@ -58,11 +58,10 @@ export default class Timer extends Component {
   render() {
     const { min, sec } = this.state;
     const { triggerUnblock, toggleTimerStarted } = this.props;
+    const time = `${min}:${`0${sec}`.slice(-2)}`;
     return (
       <TimerContainer>
-        <Countdown>
-          {min}:{`0${sec}`.slice(-2)}
-        </Countdown>
+        <Countdown>{time}</Countdown>
         <Minutes>Minutes</Minutes>
         <EndFocusButton
           triggerUnblock={triggerUnblock}
