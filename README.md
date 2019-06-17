@@ -14,7 +14,7 @@ An application that helps you stay focused on your work by blocking websites on 
 
 ## About
 
-There are many apps out there based on the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique) that allow you set a timer with the goal of maximizing your prodoctivity during that time period.
+There are many apps out there based on the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique) that allow you set a timer with the goal of maximizing your productivity during that time period.
 
 Unfortunately, these apps do not provide **accountability**.
 
