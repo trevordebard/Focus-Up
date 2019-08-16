@@ -20,7 +20,8 @@
     "react-spring": "^8.0.20",
     "styled-components": "^4.2.0",
     "sudo-prompt": "^8.2.5",
-    "wifi-control": "^2.0.1"
+    "wifi-control": "^2.0.1",
+    "snyk": "^1.216.5"
   },
   "main": "public/electron.js",
   "scripts": {
@@ -32,7 +33,9 @@
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
     "electron-pack": "build -m",
-    "win": "build -w"
+    "win": "build -w",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "browserslist": {
     "production": [
@@ -103,5 +106,6 @@
     "directories": {
       "buildResources": "assets"
     }
-  }
+  },
+  "snyk": true
 }
