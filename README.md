@@ -28,7 +28,7 @@ You must also have access to an **admin account** on your computer. Unfortunatel
 
 ### Installing
 
-You can download the app [here](https://focusup.app) and follow installation instructions upon downloading.
+You can download the app [here](https://focusup.trevordebard.com) and follow installation instructions upon downloading. **Note: not compatable with Big Sur**
 
 ## Contributing
 
