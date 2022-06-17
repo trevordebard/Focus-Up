@@ -51,7 +51,7 @@
     "@rescripts/rescript-env": "^0.0.10",
     "babel-eslint": "^10.0.1",
     "concurrently": "^4.1.0",
-    "electron": "^5.0.1",
+    "electron": "^15.5.5",
     "electron-builder": "20.43.0",
     "electron-notarize": "^0.1.1",
     "eslint": "^5.16.0",
